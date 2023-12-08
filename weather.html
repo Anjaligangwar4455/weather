@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="weather.css">
+</head>
+<body>
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="enter city name" spellcheck="false">
+            <button><img src="https://i.pinimg.com/736x/fa/0e/7b/fa0e7b992eff03c576727e95c746005c.jpg"></button>
+        </div>
+        <div class="weather">
+            <img src="https://i.pinimg.com/originals/77/0b/80/770b805d5c99c7931366c2e84e88f251.png" height=150px , width=150px>
+            <h1 class="temp">22°C</h1>
+            <h2 class="city">India</h2>
+            <div class="deatails">
+                <div class="col">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuLgp79skOEJITYQiY7TK9XUCtr_njACs64A&usqp=CAU">
+                    <div>
+                        <p class="Humidity">50%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="https://static-00.iconduck.com/assets.00/wind-icon-1024x786-if02kqiw.png" height=100px , width=100px>
+                    <div>
+                        <P class="Wind">15km/h</P>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const searchInput = document.querySelector('.search input');
+    const searchBtn = document.querySelector('.search button');
+
+    async function getWeather(city) {
+        var response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8fbafcd437ba5ae6dca642bc30fe371c&units=metric');
+        var data = await response.json();
+        console.log(data);
+        document.querySelector('.temp').innerHTML = Math.round(data.main.temp) + "°C";
+        document.querySelector('.city').innerHTML = data.name;
+        document.querySelector('.Humidity').innerHTML = Math.round(data.main.humidity) + "%";
+        document.querySelector('.Wind').innerHTML = Math.round(data.wind.speed) + "km/h";
+    }
+
+    searchBtn.addEventListener('click' , () => {
+        getWeather(searchInput.value);
+    })
+</script>
+</body>
+</html>
